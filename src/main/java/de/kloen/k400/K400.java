@@ -8,11 +8,13 @@ import javax.security.auth.login.LoginException;
 
 public class K400 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         try {
+            String token = K400Arguments.readToken(args);
             JDA jda = new JDABuilder(AccountType.BOT)
-                    .setToken("NDg4Nzk5OTIwNDM5MDMzODc5.DnheRg.6Jtin0b50R0UKHW6wX6YMC4crW0")
+                    .setToken(token)
                     .addEventListener(new PingPongMessage())
+                    .addEventListener(new CalculateKarma())
                     .buildBlocking();
 
         } catch (LoginException e) {
@@ -20,6 +22,5 @@ public class K400 {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 }

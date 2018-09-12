@@ -7,12 +7,11 @@ public class PingPongMessage extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        System.out.print("Message from:" + event.getAuthor() + ", with text: " + event.getMessage().getContentRaw());
+        String contentRaw = event.getMessage().getContentRaw();
+        String correctedPing = contentRaw.substring(1).toLowerCase().trim();
 
-        if (event.getMessage().getContentRaw().equals("!ping")) {
-            System.out.print("send Message");
+        if ((contentRaw.charAt(0) + correctedPing).equals("!ping")) {
             event.getChannel().sendMessage("Pong").queue();
         }
-
     }
 }
