@@ -7,16 +7,17 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.util.List;
 
+import static com.vdurmont.emoji.EmojiParser.parseToAliases;
+
 public class CalculateKarma extends ListenerAdapter {
 
-    public static final List<String> positiveReactions = ImmutableList.of("\uD83D\uDE04", "\uD83D\uDE03", "✌", "\uD83D\uDC4D", "\uD83D\uDC4F");
+    public static final List<String> positiveReactions = ImmutableList.of(":smile:", "+1", ":v:", "blove");
 
     @Override
     public void onMessageReactionAdd(MessageReactionAddEvent event) {
         User author = event.getUser();
-        System.out.println("User: " + author + "reacted with: " + event.getReactionEmote().getName());
 
-        if (!author.isBot() && isPositiveReaction(event.getReactionEmote().getName())) {
+        if (!author.isBot() && isPositiveReaction(parseToAliases(event.getReactionEmote().getName()))) {
             event.getChannel().sendMessage(author.getName() + " erhält 1 Karma").queue();
         }
     }
