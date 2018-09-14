@@ -15,7 +15,7 @@ public class KarmaTest {
     @Test
     @UseDataProvider("karmaValueAndTitles")
     public void title(int karmaValue, String title) {
-        Karma karma = new Karma(new K400User(), karmaValue);
+        Karma karma = new Karma(new K400User("123", "Darkwing Duck"), karmaValue);
 
         assertThat(karma.title()).isEqualTo(title);
     }

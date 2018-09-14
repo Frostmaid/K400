@@ -37,7 +37,7 @@ public class CalculateKarma extends ListenerAdapter {
         User author = event.getUser();
 
         if (!author.isBot() && isPositiveReaction(parseToAliases(event.getReactionEmote().getName()))) {
-            karmaRepository.increaseKarmaForUser(k400UserRepository.getOrInit(author.getId()), POSITIVE_KARMA_VALUE);
+            karmaRepository.increaseKarmaForUser(k400UserRepository.getOrInit(author), POSITIVE_KARMA_VALUE);
 
             event.getChannel().sendMessage(author.getName() + " erhält " + POSITIVE_KARMA_VALUE + " Karma").queue();
         }

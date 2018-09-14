@@ -4,7 +4,10 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Range;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.util.Map;
 import java.util.UUID;
 
@@ -17,17 +20,16 @@ public class Karma {
             .put("Schild der Hoffnung", Range.closed(500, 749))
             .put("Verteidiger", Range.closed(250, 499))
             .put("Wanderer", Range.closed(-249, 250))
-            .put("Dämonenbrut", Range.atMost(-1000))
-            .put("Geissel des Ödlandes", Range.closed(-999, -750))
-            .put("Schwert der Verzweiflung", Range.closed(-749, -500))
             .put("Verräter", Range.closed(-499, -250))
+            .put("Schwert der Verzweiflung", Range.closed(-749, -500))
+            .put("Geissel des Ödlandes", Range.closed(-999, -750))
+            .put("Dämonenbrut", Range.atMost(-1000))
             .build();
 
     @Id
     @GeneratedValue
     private UUID id;
 
-    @Column(unique = true)
     @OneToOne(optional = false)
     private K400User k400User;
 
@@ -40,6 +42,9 @@ public class Karma {
 
     public Karma(K400User user) {
         this(user, 0);
+    }
+
+    private Karma() {
     }
 
     public void addKarma(int karmaValue) {

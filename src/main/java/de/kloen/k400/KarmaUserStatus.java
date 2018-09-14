@@ -28,9 +28,9 @@ public class KarmaUserStatus extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         if (getCorrectedCommand(event).equals("!status")) {
             User author = event.getAuthor();
-            K400User k400User = k400UserRepository.getOrInit(author.getId());
+            K400User k400User = k400UserRepository.getOrInit(author);
             Karma karma = karmaRepository.getOrInitForK400User(k400User);
-            event.getChannel().sendMessage(author.getName() + " hat " + karma.value() + " Karma und den Status " + karma.title()).queue();
+            event.getChannel().sendMessage(author.getName() + " hat " + karma.value() + " Karma und den Titel " + karma.title()).queue();
         }
 
     }
