@@ -11,9 +11,8 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
-
 import static de.kloen.k400.MessageUtil.getCorrectedCommand;
+import static java.util.stream.Collectors.joining;
 
 @Service
 public class KarmaUserStatus extends ListenerAdapter {
@@ -32,24 +31,30 @@ public class KarmaUserStatus extends ListenerAdapter {
         String correctedCommand = getCorrectedCommand(event);
 
         if (correctedCommand.length() == 7 && correctedCommand.equals("!status")) {
-            User author = event.getAuthor();
-            K400User k400User = k400UserRepository.getOrInit(author);
-            Karma karma = karmaRepository.getOrInitForK400User(k400User);
-            event.getChannel().sendMessage(statusMessage(k400User, karma)).queue();
+            ownStatus(event);
+        } else if (correctedCommand.length() > 7 && correctedCommand.substring(0, 7).equals("!status")) {
+            otherUsersStatus(event);
         }
+    }
 
-        if (correctedCommand.length() > 7 && correctedCommand.substring(0, 7).equals("!status")) {
-            JDA jda = event.getJDA();
-            String userName = event.getMessage().getContentRaw().substring(8);
-            String message = jda.getUsers()
-                    .stream()
-                    .filter(user -> user.getName().equals(userName))
-                    .map(user -> k400UserRepository.getOrInit(user))
-                    .map(k400User -> statusMessage(k400User, karmaRepository.getOrInitForK400User(k400User)))
-                    .collect(Collectors.joining("\n"));
+    private void ownStatus(MessageReceivedEvent event) {
+        User author = event.getAuthor();
+        K400User k400User = k400UserRepository.getOrInit(author);
+        Karma karma = karmaRepository.getOrInitForK400User(k400User);
+        event.getChannel().sendMessage(statusMessage(k400User, karma)).queue();
+    }
 
-            event.getChannel().sendMessage(message).queue();
-        }
+    private void otherUsersStatus(MessageReceivedEvent event) {
+        JDA jda = event.getJDA();
+        String userName = event.getMessage().getContentRaw().substring(8);
+        String message = jda.getUsers()
+                .stream()
+                .filter(user -> user.getName().equals(userName))
+                .map(user -> k400UserRepository.getOrInit(user))
+                .map(k400User -> statusMessage(k400User, karmaRepository.getOrInitForK400User(k400User)))
+                .collect(joining("\n"));
+
+        event.getChannel().sendMessage(message).queue();
     }
 
     private static String statusMessage(K400User author, Karma karma) {
