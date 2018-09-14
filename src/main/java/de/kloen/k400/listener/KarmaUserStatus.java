@@ -1,4 +1,4 @@
-package de.kloen.k400;
+package de.kloen.k400.listener;
 
 import de.kloen.k400.db.K400User;
 import de.kloen.k400.db.K400UserRepository;
@@ -11,7 +11,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static de.kloen.k400.MessageUtil.getCorrectedCommand;
+import static de.kloen.k400.listener.MessageUtil.getCorrectedCommand;
 import static java.util.stream.Collectors.joining;
 
 @Service

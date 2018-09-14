@@ -1,4 +1,4 @@
-package de.kloen.k400;
+package de.kloen.k400.listener;
 
 import com.google.common.collect.ImmutableList;
 import de.kloen.k400.db.K400UserRepository;

@@ -1,4 +1,4 @@
-package de.kloen.k400;
+package de.kloen.k400.listener;
 
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 

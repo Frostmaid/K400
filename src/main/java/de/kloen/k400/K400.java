@@ -1,5 +1,6 @@
 package de.kloen.k400;
 
+import de.kloen.k400.listener.*;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,13 @@ public class K400 implements CommandLineRunner {
 
     private CalculateKarma calculateKarma;
     private KarmaUserStatus karmaUserStatus;
+    private StimPack stimPack;
 
     @Autowired
-    public K400(CalculateKarma calculateKarma, KarmaUserStatus karmaUserStatus) {
+    public K400(CalculateKarma calculateKarma, KarmaUserStatus karmaUserStatus, StimPack stimPack) {
         this.calculateKarma = calculateKarma;
         this.karmaUserStatus = karmaUserStatus;
+        this.stimPack = stimPack;
     }
 
     public static void main(String[] args) {
@@ -33,6 +36,7 @@ public class K400 implements CommandLineRunner {
                 .addEventListener(new Help())
                 .addEventListener(calculateKarma)
                 .addEventListener(karmaUserStatus)
+                .addEventListener(stimPack)
                 .buildBlocking();
     }
 }
