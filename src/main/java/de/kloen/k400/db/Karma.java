@@ -1,12 +1,27 @@
 package de.kloen.k400.db;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Range;
 
 import javax.persistence.*;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
 public class Karma {
+
+    public static final Map<String, Range> titles = ImmutableMap.<String, Range>builder()
+            .put("Retter der Verdammten", Range.atLeast(1000))
+            .put("Verteidiger des Ödlandes", Range.closed(750, 999))
+            .put("Schild der Hoffnung", Range.closed(500, 749))
+            .put("Verteidiger", Range.closed(250, 499))
+            .put("Wanderer", Range.closed(-249, 250))
+            .put("Dämonenbrut", Range.atMost(-1000))
+            .put("Geissel des Ödlandes", Range.closed(-999, -750))
+            .put("Schwert der Verzweiflung", Range.closed(-749, -500))
+            .put("Verräter", Range.closed(-499, -250))
+            .build();
 
     @Id
     @GeneratedValue
@@ -40,45 +55,12 @@ public class Karma {
     }
 
     public String title() {
-        if (value >= 1000) {
-            return "Retter der Verdammten";
-        }
-        if (between(value, 750, 999)) {
-            return "Verteidiger des Ödlandes";
-        }
+        return titles.entrySet()
+                .stream()
+                .filter(range -> range.getValue().contains(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No title for karma value: " + this.value))
+                .getKey();
 
-        if (between(value, 500, 749)) {
-            return "Schild der Hoffnung";
-        }
-
-        if (between(value, 250, 499)) {
-            return "Verteidiger";
-        }
-
-        if (between(value, -249, 250)) {
-            return "Wanderer";
-        }
-
-        if (value <= -1000) {
-            return "Dämonenbrut";
-        }
-
-        if (between(value,  -999, -750)) {
-            return "Geissel des Ödlandes";
-        }
-
-        if (between(value, -749, -500)) {
-            return "Schwert der Verzweiflung";
-        }
-
-        if (between(value, -499, -250)) {
-            return "Verräter";
-        }
-
-        throw new IllegalArgumentException("No title for karma value: " + value);
-    }
-
-    private static boolean between(int value, int min, int max) {
-        return (value >= min && value <= max);
     }
 }
