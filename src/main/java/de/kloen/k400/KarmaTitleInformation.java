@@ -16,10 +16,11 @@ public class KarmaTitleInformation extends ListenerAdapter {
             String titlesMessage = titles
                     .entrySet()
                     .stream()
-                    .map(title -> title.getKey() )//+ "(" + title.getValue().lowerEndpoint() + " bis " + title.getValue().upperEndpoint() + ")"
+                    .map(title -> title.getKey() + " (" + title.getValue() + " Karma)")
                     .collect(Collectors.joining("\n"));
 
             event.getChannel().sendMessage(titlesMessage).queue();
         }
     }
+
 }
