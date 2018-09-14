@@ -30,6 +30,7 @@ public class K400 implements CommandLineRunner {
                 .setToken(token)
                 .addEventListener(new KarmaTitleInformation())
                 .addEventListener(new PingPongMessage())
+                .addEventListener(new Help())
                 .addEventListener(calculateKarma)
                 .addEventListener(karmaUserStatus)
                 .buildBlocking();

@@ -4,11 +4,14 @@ import de.kloen.k400.db.K400User;
 import de.kloen.k400.db.K400UserRepository;
 import de.kloen.k400.db.Karma;
 import de.kloen.k400.db.KarmaRepository;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 import static de.kloen.k400.MessageUtil.getCorrectedCommand;
 
@@ -26,12 +29,30 @@ public class KarmaUserStatus extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        if (getCorrectedCommand(event).equals("!status")) {
+        String correctedCommand = getCorrectedCommand(event);
+
+        if (correctedCommand.length() == 7 && correctedCommand.equals("!status")) {
             User author = event.getAuthor();
             K400User k400User = k400UserRepository.getOrInit(author);
             Karma karma = karmaRepository.getOrInitForK400User(k400User);
-            event.getChannel().sendMessage(author.getName() + " hat " + karma.value() + " Karma und den Titel " + karma.title()).queue();
+            event.getChannel().sendMessage(statusMessage(k400User, karma)).queue();
         }
 
+        if (correctedCommand.length() > 7 && correctedCommand.substring(0, 7).equals("!status")) {
+            JDA jda = event.getJDA();
+            String userName = event.getMessage().getContentRaw().substring(8);
+            String message = jda.getUsers()
+                    .stream()
+                    .filter(user -> user.getName().equals(userName))
+                    .map(user -> k400UserRepository.getOrInit(user))
+                    .map(k400User -> statusMessage(k400User, karmaRepository.getOrInitForK400User(k400User)))
+                    .collect(Collectors.joining("\n"));
+
+            event.getChannel().sendMessage(message).queue();
+        }
+    }
+
+    private static String statusMessage(K400User author, Karma karma) {
+        return author.name() + " hat " + karma.value() + " Karma und den Titel " + karma.title();
     }
 }
