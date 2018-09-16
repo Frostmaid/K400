@@ -10,7 +10,7 @@ public class PingPongMessage extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        if (isExpectedCommand(event, PING)) {
+        if (isExpectedCommand(event.getMessage().getContentRaw(), PING)) {
             event.getChannel().sendMessage("Pong").queue();
         }
     }

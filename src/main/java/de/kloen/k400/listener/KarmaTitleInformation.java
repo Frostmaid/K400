@@ -13,7 +13,7 @@ public class KarmaTitleInformation extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        if (isExpectedCommand(event, KARMA_TITLE)) {
+        if (isExpectedCommand(event.getMessage().getContentRaw(), KARMA_TITLE)) {
             String titlesMessage = titles
                     .entrySet()
                     .stream()

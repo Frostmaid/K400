@@ -13,13 +13,13 @@ public class K400 implements CommandLineRunner {
 
     private CalculateKarma calculateKarma;
     private KarmaUserStatus karmaUserStatus;
-    private StimPack stimPack;
+    private FoodDrugsMedicine foodDrugsMedicine;
 
     @Autowired
-    public K400(CalculateKarma calculateKarma, KarmaUserStatus karmaUserStatus, StimPack stimPack) {
+    public K400(CalculateKarma calculateKarma, KarmaUserStatus karmaUserStatus, FoodDrugsMedicine foodDrugsMedicine) {
         this.calculateKarma = calculateKarma;
         this.karmaUserStatus = karmaUserStatus;
-        this.stimPack = stimPack;
+        this.foodDrugsMedicine = foodDrugsMedicine;
     }
 
     public static void main(String[] args) {
@@ -36,7 +36,7 @@ public class K400 implements CommandLineRunner {
                 .addEventListener(new Help())
                 .addEventListener(calculateKarma)
                 .addEventListener(karmaUserStatus)
-                .addEventListener(stimPack)
+                .addEventListener(foodDrugsMedicine)
                 .buildBlocking();
     }
 }

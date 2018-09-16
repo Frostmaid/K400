@@ -29,7 +29,7 @@ public class KarmaUserStatus extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        String correctedCommand = getCorrectedCommand(event);
+        String correctedCommand = getCorrectedCommand(event.getMessage().getContentRaw());
 
         if (correctedCommand.length() == 7 && correctedCommand.equals(STATUS)) {
             ownStatus(event);
