@@ -11,6 +11,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static de.kloen.k400.listener.Commands.STATUS;
 import static de.kloen.k400.listener.MessageUtil.getCorrectedCommand;
 import static java.util.stream.Collectors.joining;
 
@@ -30,9 +31,9 @@ public class KarmaUserStatus extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         String correctedCommand = getCorrectedCommand(event);
 
-        if (correctedCommand.length() == 7 && correctedCommand.equals("!status")) {
+        if (correctedCommand.length() == 7 && correctedCommand.equals(STATUS)) {
             ownStatus(event);
-        } else if (correctedCommand.length() > 7 && correctedCommand.substring(0, 7).equals("!status")) {
+        } else if (correctedCommand.length() > 7 && correctedCommand.substring(0, 7).equals(STATUS)) {
             otherUsersStatus(event);
         }
     }

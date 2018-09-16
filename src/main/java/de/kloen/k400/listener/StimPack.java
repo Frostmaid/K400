@@ -11,39 +11,39 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static de.kloen.k400.listener.CalculateKarma.POSITIVE_KARMA_VALUE;
-import static de.kloen.k400.listener.MessageUtil.getCorrectedCommand;
+import static de.kloen.k400.listener.Commands.STIM_PACK;
+import static de.kloen.k400.listener.Karma.STIM_PACK_KARMA_GAIN;
+import static de.kloen.k400.listener.MessageUtil.isExpectedCommand;
+import static java.lang.String.format;
 
 @Service
 public class StimPack extends ListenerAdapter {
 
-
     private K400UserRepository userRepository;
     private KarmaRepository karmaRepository;
+    private UsersService usersService;
 
     @Autowired
-    public StimPack(K400UserRepository userRepository, KarmaRepository karmaRepository) {
+    public StimPack(K400UserRepository userRepository, KarmaRepository karmaRepository, UsersService usersService) {
         this.userRepository = userRepository;
         this.karmaRepository = karmaRepository;
+        this.usersService = usersService;
     }
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        if (getCorrectedCommand(event).substring(0, 5).equals("!stim")) {
+        if (isExpectedCommand(event, STIM_PACK)) {
             User author = event.getAuthor();
             String userToHeal = event.getMessage().getContentRaw().substring(6);
-            Optional<K400User> k400User = event.getJDA().getUsers()
-                    .stream()
-                    .filter(user -> user.getName().equals(userToHeal))
-                    .filter(user -> !user.isBot())
-                    .map(user -> userRepository.getOrInit(user))
-                    .findFirst();
 
-            if (!author.isBot() && k400User.isPresent()) {
-                karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), POSITIVE_KARMA_VALUE);
+            Optional<K400User> k400UserToHeal = usersService.findUserForName(event.getJDA(), userToHeal);
 
-                String message = author.getName() + " rammt " + userToHeal + " ein Stimpak in den Arm!\n"
-                        + author.getName() + " erhält " + POSITIVE_KARMA_VALUE + " Karma";
+            if (!author.isBot() && k400UserToHeal.isPresent() && !k400UserToHeal.get().discordId().equals(author.getId())) {
+                karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), STIM_PACK_KARMA_GAIN);
+
+                String message = format("%s rammt %s ein Stimpak in den Arm. Puh! Das war knapp (+%s Karma)",
+                        author.getName(), userToHeal, STIM_PACK_KARMA_GAIN);
+
                 event.getChannel().sendMessage(message).queue();
             }
         }

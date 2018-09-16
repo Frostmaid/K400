@@ -12,13 +12,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.vdurmont.emoji.EmojiParser.parseToAliases;
+import static de.kloen.k400.listener.Karma.POSITIVE_KARMA_VALUE;
 
 @Service
 public class CalculateKarma extends ListenerAdapter {
-
-    public static final int POSITIVE_KARMA_VALUE = 1;
-
-    public static final int NEGATIVE_KARMA_VALUE = -1;
 
     public static final List<String> positiveReactions = ImmutableList.of(":smile:", "+1", ":v:", "blove");
 
