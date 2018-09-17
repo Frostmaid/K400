@@ -15,4 +15,16 @@ public abstract class Commands {
     public static final String JET = "!jet";
 
     public static final String FEV = "!fev";
+
+    public static final String SERUM = "!serum";
+
+    public static final String MENTATS = "!mentats";
+
+    public static final String BUFFOUT = "!buffout";
+
+    public static final String SUGARBOMBS = "!sugarbombs";
+
+    public static final String NUKA = "!nuka";
+
+    public static final String RADAWAY = "!radaway";
 }
