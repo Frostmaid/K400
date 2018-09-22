@@ -1,4 +1,4 @@
-package de.kloen.k400.listener;
+package de.kloen.k400.listener.command;
 
 public abstract class Commands {
 

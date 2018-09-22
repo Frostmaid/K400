@@ -1,8 +1,9 @@
-package de.kloen.k400.listener;
+package de.kloen.k400.listener.command;
 
 import de.kloen.k400.db.K400User;
 import de.kloen.k400.db.K400UserRepository;
 import de.kloen.k400.db.KarmaRepository;
+import de.kloen.k400.listener.UserService;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -11,9 +12,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static de.kloen.k400.listener.Commands.*;
 import static de.kloen.k400.listener.Karma.*;
+import static de.kloen.k400.listener.MessageUtil.isCommand;
 import static de.kloen.k400.listener.MessageUtil.isExpectedCommand;
+import static de.kloen.k400.listener.command.Commands.*;
 import static java.lang.String.format;
 
 @Service
@@ -23,13 +25,13 @@ public class FoodDrugsMedicine extends ListenerAdapter {
 
     private KarmaRepository karmaRepository;
 
-    private UsersService usersService;
+    private UserService userService;
 
     @Autowired
-    public FoodDrugsMedicine(K400UserRepository userRepository, KarmaRepository karmaRepository, UsersService usersService) {
+    public FoodDrugsMedicine(K400UserRepository userRepository, KarmaRepository karmaRepository, UserService userService) {
         this.userRepository = userRepository;
         this.karmaRepository = karmaRepository;
-        this.usersService = usersService;
+        this.userService = userService;
     }
 
     @Override
@@ -62,7 +64,7 @@ public class FoodDrugsMedicine extends ListenerAdapter {
     }
 
     private void nuka(MessageReceivedEvent event, User author, String userName) {
-        Optional<K400User> user = usersService.findUserForName(event.getJDA(), userName);
+        Optional<K400User> user = userService.findUserForName(event.getJDA(), userName);
         if (isValidTargetUser(author, user)) {
             karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), NUKA_KARMA);
             event.getChannel()
@@ -73,7 +75,7 @@ public class FoodDrugsMedicine extends ListenerAdapter {
     }
 
     private void sugarbombs(MessageReceivedEvent event, User author, String userName) {
-        Optional<K400User> user = usersService.findUserForName(event.getJDA(), userName);
+        Optional<K400User> user = userService.findUserForName(event.getJDA(), userName);
         if (isValidTargetUser(author, user)) {
             karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), SUGARBOMBS_KARMA);
             event.getChannel()
@@ -84,7 +86,7 @@ public class FoodDrugsMedicine extends ListenerAdapter {
     }
 
     private void radaway(MessageReceivedEvent event, User author, String userName) {
-        Optional<K400User> user = usersService.findUserForName(event.getJDA(), userName);
+        Optional<K400User> user = userService.findUserForName(event.getJDA(), userName);
         if (isValidTargetUser(author, user)) {
             karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), RADAWAY_KARMA);
             event.getChannel()
@@ -95,7 +97,7 @@ public class FoodDrugsMedicine extends ListenerAdapter {
     }
 
     private void buffout(MessageReceivedEvent event, User author, String userName) {
-        Optional<K400User> user = usersService.findUserForName(event.getJDA(), userName);
+        Optional<K400User> user = userService.findUserForName(event.getJDA(), userName);
         if (isValidTargetUser(author, user)) {
             karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), BUFFOUT_KARMA);
             event.getChannel()
@@ -106,7 +108,7 @@ public class FoodDrugsMedicine extends ListenerAdapter {
     }
 
     private void mentats(MessageReceivedEvent event, User author, String userName) {
-        Optional<K400User> user = usersService.findUserForName(event.getJDA(), userName);
+        Optional<K400User> user = userService.findUserForName(event.getJDA(), userName);
         if (isValidTargetUser(author, user)) {
             karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), MENTATS_KARMA);
             event.getChannel()
@@ -117,7 +119,7 @@ public class FoodDrugsMedicine extends ListenerAdapter {
     }
 
     private void serum(MessageReceivedEvent event, User author, String userName) {
-        Optional<K400User> user = usersService.findUserForName(event.getJDA(), userName);
+        Optional<K400User> user = userService.findUserForName(event.getJDA(), userName);
         if (isValidTargetUser(author, user)) {
             karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), SERUM_KARMA);
             event.getChannel()
@@ -128,7 +130,7 @@ public class FoodDrugsMedicine extends ListenerAdapter {
     }
 
     private void fev(MessageReceivedEvent event, User author, String userName) {
-        Optional<K400User> user = usersService.findUserForName(event.getJDA(), userName);
+        Optional<K400User> user = userService.findUserForName(event.getJDA(), userName);
         if (isValidTargetUser(author, user)) {
             karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), FEV_KARMA);
             event.getChannel()
@@ -139,7 +141,7 @@ public class FoodDrugsMedicine extends ListenerAdapter {
     }
 
     private void jet(MessageReceivedEvent event, User author, String userName) {
-        Optional<K400User> user = usersService.findUserForName(event.getJDA(), userName);
+        Optional<K400User> user = userService.findUserForName(event.getJDA(), userName);
         if (isValidTargetUser(author, user)) {
             karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), JET_KARMA);
             event.getChannel()
@@ -150,11 +152,9 @@ public class FoodDrugsMedicine extends ListenerAdapter {
     }
 
     private void stimPack(MessageReceivedEvent event, User author, String userName) {
-        Optional<K400User> k400UserToHeal = usersService.findUserForName(event.getJDA(), userName);
-
+        Optional<K400User> k400UserToHeal = userService.findUserForName(event.getJDA(), userName);
         if (isValidTargetUser(author, k400UserToHeal)) {
             karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), STIM_PACK_KARMA);
-
             event.getChannel()
                     .sendMessage(format("%s rammt %s ein Stimpak in den Arm. Puh! Das war knapp (%s Karma)",
                             author.getName(), userName, STIM_PACK_KARMA))
@@ -162,11 +162,7 @@ public class FoodDrugsMedicine extends ListenerAdapter {
         }
     }
 
-    private static boolean isCommand(String message) {
-        return message.substring(0, 1).equals("!");
-    }
-
-    private boolean isValidTargetUser(User author, Optional<K400User> targetUser) {
+    private static boolean isValidTargetUser(User author, Optional<K400User> targetUser) {
         return !author.isBot() && targetUser.isPresent() && !targetUser.get().discordId().equals(author.getId());
     }
 }

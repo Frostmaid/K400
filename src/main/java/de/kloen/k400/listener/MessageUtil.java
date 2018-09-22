@@ -13,4 +13,8 @@ public class MessageUtil {
     public static boolean isExpectedCommand(String message, String expectedCommand) {
         return getCorrectedCommand(message).substring(0, expectedCommand.length()).equals(expectedCommand);
     }
+
+    public static boolean isCommand(String message) {
+        return message.substring(0, 1).equals("!");
+    }
 }

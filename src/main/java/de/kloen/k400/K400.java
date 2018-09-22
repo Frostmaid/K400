@@ -1,6 +1,10 @@
 package de.kloen.k400;
 
-import de.kloen.k400.listener.*;
+import de.kloen.k400.listener.Reactions;
+import de.kloen.k400.listener.command.FoodDrugsMedicine;
+import de.kloen.k400.listener.command.Help;
+import de.kloen.k400.listener.command.PingPongMessage;
+import de.kloen.k400.listener.command.UserStatus;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +15,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class K400 implements CommandLineRunner {
 
-    private CalculateKarma calculateKarma;
-    private KarmaUserStatus karmaUserStatus;
+    private Reactions reactions;
+    private UserStatus userStatus;
     private FoodDrugsMedicine foodDrugsMedicine;
 
     @Autowired
-    public K400(CalculateKarma calculateKarma, KarmaUserStatus karmaUserStatus, FoodDrugsMedicine foodDrugsMedicine) {
-        this.calculateKarma = calculateKarma;
-        this.karmaUserStatus = karmaUserStatus;
+    public K400(Reactions reactions, UserStatus userStatus, FoodDrugsMedicine foodDrugsMedicine) {
+        this.reactions = reactions;
+        this.userStatus = userStatus;
         this.foodDrugsMedicine = foodDrugsMedicine;
     }
 
@@ -31,11 +35,10 @@ public class K400 implements CommandLineRunner {
         String token = K400Arguments.readToken(args);
         new JDABuilder(AccountType.BOT)
                 .setToken(token)
-                .addEventListener(new KarmaTitleInformation())
                 .addEventListener(new PingPongMessage())
                 .addEventListener(new Help())
-                .addEventListener(calculateKarma)
-                .addEventListener(karmaUserStatus)
+                .addEventListener(reactions)
+                .addEventListener(userStatus)
                 .addEventListener(foodDrugsMedicine)
                 .buildBlocking();
     }

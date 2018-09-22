@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UsersService {
+public class UserService {
 
     private K400UserRepository userRepository;
 
     @Autowired
-    public UsersService(K400UserRepository userRepository) {
+    public UserService(K400UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

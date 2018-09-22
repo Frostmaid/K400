@@ -15,7 +15,7 @@ import static com.vdurmont.emoji.EmojiParser.parseToAliases;
 import static de.kloen.k400.listener.Karma.POSITIVE_KARMA_VALUE;
 
 @Service
-public class CalculateKarma extends ListenerAdapter {
+public class Reactions extends ListenerAdapter {
 
     public static final List<String> positiveReactions = ImmutableList.of(":smile:", "+1", ":v:", "blove");
 
@@ -24,7 +24,7 @@ public class CalculateKarma extends ListenerAdapter {
     private K400UserRepository k400UserRepository;
 
     @Autowired
-    public CalculateKarma(KarmaRepository karmaRepository, K400UserRepository k400UserRepository) {
+    public Reactions(KarmaRepository karmaRepository, K400UserRepository k400UserRepository) {
         this.karmaRepository = karmaRepository;
         this.k400UserRepository = k400UserRepository;
     }
