@@ -8,17 +8,16 @@ import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 import static de.kloen.k400.listener.Karma.*;
-import static de.kloen.k400.listener.MessageUtil.isCommand;
-import static de.kloen.k400.listener.MessageUtil.isExpectedCommand;
+import static de.kloen.k400.listener.MessageUtil.*;
 import static de.kloen.k400.listener.command.Commands.*;
 import static java.lang.String.format;
 
-@Service
+@Component
 public class FoodDrugsMedicine extends ListenerAdapter {
 
     private K400UserRepository userRepository;
@@ -162,7 +161,4 @@ public class FoodDrugsMedicine extends ListenerAdapter {
         }
     }
 
-    private static boolean isValidTargetUser(User author, Optional<K400User> targetUser) {
-        return !author.isBot() && targetUser.isPresent() && !targetUser.get().discordId().equals(author.getId());
-    }
 }

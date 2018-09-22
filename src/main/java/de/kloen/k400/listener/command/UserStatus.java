@@ -10,7 +10,7 @@ import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
@@ -20,7 +20,7 @@ import static de.kloen.k400.listener.command.Commands.KARMA_TITLE;
 import static de.kloen.k400.listener.command.Commands.STATUS;
 import static java.util.stream.Collectors.joining;
 
-@Service
+@Component
 public class UserStatus extends ListenerAdapter {
 
     private KarmaRepository karmaRepository;

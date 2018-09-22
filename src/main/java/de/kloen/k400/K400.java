@@ -1,10 +1,7 @@
 package de.kloen.k400;
 
 import de.kloen.k400.listener.Reactions;
-import de.kloen.k400.listener.command.FoodDrugsMedicine;
-import de.kloen.k400.listener.command.Help;
-import de.kloen.k400.listener.command.PingPongMessage;
-import de.kloen.k400.listener.command.UserStatus;
+import de.kloen.k400.listener.command.*;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +13,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class K400 implements CommandLineRunner {
 
     private Reactions reactions;
+
     private UserStatus userStatus;
+
     private FoodDrugsMedicine foodDrugsMedicine;
 
+    private Synth synth;
+
     @Autowired
-    public K400(Reactions reactions, UserStatus userStatus, FoodDrugsMedicine foodDrugsMedicine) {
+    public K400(Reactions reactions, UserStatus userStatus, FoodDrugsMedicine foodDrugsMedicine, Synth synth) {
         this.reactions = reactions;
         this.userStatus = userStatus;
         this.foodDrugsMedicine = foodDrugsMedicine;
+        this.synth = synth;
     }
 
     public static void main(String[] args) {
@@ -40,6 +42,7 @@ public class K400 implements CommandLineRunner {
                 .addEventListener(reactions)
                 .addEventListener(userStatus)
                 .addEventListener(foodDrugsMedicine)
+                .addEventListener(synth)
                 .buildBlocking();
     }
 }

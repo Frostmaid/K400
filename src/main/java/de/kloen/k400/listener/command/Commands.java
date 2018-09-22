@@ -27,4 +27,8 @@ public abstract class Commands {
     public static final String NUKA = "!nuka";
 
     public static final String RADAWAY = "!radaway";
+
+    public static final String INSTITUT = "!institut";
+
+    public static final String RECALL = "!recall";
 }
