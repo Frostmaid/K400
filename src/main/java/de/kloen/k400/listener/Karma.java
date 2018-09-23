@@ -22,6 +22,8 @@ public abstract class Karma {
 
     public static final int INSTITUT_KARMA = -50;
 
+    public static final int RAT_KARMA = 1;
+
     public static final int RECALL_KARMA = 10;
 
     public static final int POSITIVE_KARMA_VALUE = 1;

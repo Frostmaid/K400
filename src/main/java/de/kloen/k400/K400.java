@@ -20,12 +20,15 @@ public class K400 implements CommandLineRunner {
 
     private Synth synth;
 
+    private Creature creature;
+
     @Autowired
-    public K400(Reactions reactions, UserStatus userStatus, FoodDrugsMedicine foodDrugsMedicine, Synth synth) {
+    public K400(Reactions reactions, UserStatus userStatus, FoodDrugsMedicine foodDrugsMedicine, Synth synth, Creature creature) {
         this.reactions = reactions;
         this.userStatus = userStatus;
         this.foodDrugsMedicine = foodDrugsMedicine;
         this.synth = synth;
+        this.creature = creature;
     }
 
     public static void main(String[] args) {
@@ -43,6 +46,7 @@ public class K400 implements CommandLineRunner {
                 .addEventListener(userStatus)
                 .addEventListener(foodDrugsMedicine)
                 .addEventListener(synth)
+                .addEventListener(creature)
                 .buildBlocking();
     }
 }

@@ -31,4 +31,6 @@ public abstract class Commands {
     public static final String INSTITUT = "!institut";
 
     public static final String RECALL = "!recall";
+
+    public static final String RAT = "!ratte";
 }

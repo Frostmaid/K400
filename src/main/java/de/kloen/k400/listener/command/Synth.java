@@ -7,6 +7,7 @@ import de.kloen.k400.listener.UserService;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -27,6 +28,7 @@ public class Synth extends ListenerAdapter {
 
     private final UserService userService;
 
+    @Autowired
     public Synth(K400UserRepository userRepository, KarmaRepository karmaRepository, UserService userService) {
         this.userRepository = userRepository;
         this.karmaRepository = karmaRepository;
