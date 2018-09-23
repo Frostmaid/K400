@@ -35,13 +35,13 @@ public class Synth extends ListenerAdapter {
                 String message = format("Dank eines Tipps von %s konnte das Institut %s finden und gegen einen Synth austauschen (%s Karma)",
                         author.getName(), userName, INSTITUT_KARMA);
 
-                commandService.executeCommand(event, author, userName, INSTITUT_KARMA, message);
+                commandService.executeCommandWithTarget(event, author, userName, INSTITUT_KARMA, message);
             } else if (isExpectedCommand(eventMessage, RECALL)) {
                 String userName = eventMessage.substring(RECALL.length() + 1);
                 String message = format("%s liest einen Recall-Code vor. Plötzlich erinnert sich %s an die Flucht vorm Institut. %s ist ein geflüchteter Synth! (%s Karma)",
                         author.getName(), userName, userName, RECALL_KARMA);
 
-                commandService.executeCommand(event, author, userName, RECALL_KARMA, message);
+                commandService.executeCommandWithTarget(event, author, userName, RECALL_KARMA, message);
             }
         }
     }

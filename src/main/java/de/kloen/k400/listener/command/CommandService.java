@@ -29,9 +29,18 @@ public class CommandService {
         this.userService = userService;
     }
 
-    public void executeCommand(MessageReceivedEvent event, User author, String userName, int karma, String message) {
+    public void executeCommandWithTarget(MessageReceivedEvent event, User author, String userName, int karma, String message) {
         Optional<K400User> user = userService.findUserForName(event.getJDA(), userName);
         if (isValidTargetUser(author, user)) {
+            karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), karma);
+            event.getChannel()
+                    .sendMessage(message)
+                    .queue();
+        }
+    }
+
+    public void executeCommandWithOutTarget(MessageReceivedEvent event, User author, int karma, String message) {
+        if (!author.isBot()) {
             karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), karma);
             event.getChannel()
                     .sendMessage(message)

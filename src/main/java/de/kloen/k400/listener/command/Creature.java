@@ -1,8 +1,5 @@
 package de.kloen.k400.listener.command;
 
-import de.kloen.k400.db.K400UserRepository;
-import de.kloen.k400.db.KarmaRepository;
-import de.kloen.k400.listener.UserService;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -18,39 +15,26 @@ import static java.lang.String.format;
 @Component
 public class Creature extends ListenerAdapter {
 
-    private final K400UserRepository userRepository;
 
-    private final KarmaRepository karmaRepository;
-
-    private final UserService userService;
+    private CommandService commandService;
 
     @Autowired
-    public Creature(K400UserRepository userRepository, KarmaRepository karmaRepository, UserService userService) {
-        this.userRepository = userRepository;
-        this.karmaRepository = karmaRepository;
-        this.userService = userService;
+    public Creature(CommandService commandService) {
+        this.commandService = commandService;
     }
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         User author = event.getAuthor();
-        String message = event.getMessage().getContentRaw();
+        String eventMessage = event.getMessage().getContentRaw();
 
-        if (isCommand(message)) {
-            if (isExpectedCommand(message, RAT)) {
-                rat(event, author);
+        if (isCommand(eventMessage)) {
+            if (isExpectedCommand(eventMessage, RAT)) {
+                String message = format("Plötzlich springt eine Maulwurfsratte in den Channel! " +
+                                "Zum Glück hat %s einen Baseballschläger parat und erledigt das Viech! (%s Karma)",
+                        author.getName(), RAT_KARMA);
+                commandService.executeCommandWithOutTarget(event, author, RAT_KARMA, message);
             }
-        }
-    }
-
-    public void rat(MessageReceivedEvent event, User author) {
-        if (!author.isBot()) {
-            karmaRepository.increaseKarmaForUser(userRepository.getOrInit(author), RAT_KARMA);
-            event.getChannel()
-                    .sendMessage(format("Plötzlich springt eine Maulwurfsratte in den Channel! " +
-                                    "Zum Glück hat %s einen Baseballschläger parat und erledigt das Viech! (%s Karma)",
-                            author.getName(), RAT_KARMA))
-                    .queue();
         }
     }
 }
