@@ -33,4 +33,6 @@ public abstract class Commands {
     public static final String RECALL = "!recall";
 
     public static final String RAT = "!ratte";
+
+    public static final String JOIN_TEAM = "!join";
 }

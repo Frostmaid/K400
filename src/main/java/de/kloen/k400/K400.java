@@ -22,13 +22,16 @@ public class K400 implements CommandLineRunner {
 
     private Creature creature;
 
+    private Team team;
+
     @Autowired
-    public K400(Reactions reactions, UserStatus userStatus, FoodDrugsMedicine foodDrugsMedicine, Synth synth, Creature creature) {
+    public K400(Reactions reactions, UserStatus userStatus, FoodDrugsMedicine foodDrugsMedicine, Synth synth, Creature creature, Team team) {
         this.reactions = reactions;
         this.userStatus = userStatus;
         this.foodDrugsMedicine = foodDrugsMedicine;
         this.synth = synth;
         this.creature = creature;
+        this.team = team;
     }
 
     public static void main(String[] args) {
@@ -47,6 +50,7 @@ public class K400 implements CommandLineRunner {
                 .addEventListener(foodDrugsMedicine)
                 .addEventListener(synth)
                 .addEventListener(creature)
+                .addEventListener(team)
                 .buildBlocking();
     }
 }

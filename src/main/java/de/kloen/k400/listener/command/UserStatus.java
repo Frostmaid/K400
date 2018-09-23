@@ -77,6 +77,11 @@ public class UserStatus extends ListenerAdapter {
     }
 
     private static String statusMessage(K400User author, Karma karma) {
-        return author.name() + " hat " + karma.value() + " Karma und den Titel " + karma.title();
+        String team = author.team()
+                .filter(t -> !t.isEmpty())
+                .map(t -> " und gehört zu den " + t)
+                .orElse("");
+
+        return author.name() + " hat " + karma.value() + " Karma und den Titel " + karma.title() + team;
     }
 }

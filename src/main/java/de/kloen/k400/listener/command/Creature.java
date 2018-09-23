@@ -14,8 +14,7 @@ import static java.lang.String.format;
 
 @Component
 public class Creature extends ListenerAdapter {
-
-
+    
     private CommandService commandService;
 
     @Autowired
