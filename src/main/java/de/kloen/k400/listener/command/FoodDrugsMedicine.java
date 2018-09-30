@@ -28,56 +28,56 @@ public class FoodDrugsMedicine extends ListenerAdapter {
         String eventMessage = event.getMessage().getContentRaw();
 
         if (isCommand(eventMessage)) {
-            if (isExpectedCommand(eventMessage, STIM_PACK)) {
-                String userName = eventMessage.substring(STIM_PACK.length() + 1);
+            if (isExpectedCommand(eventMessage, STIM_PACK.value())) {
+                String userName = eventMessage.substring(STIM_PACK.value().length() + 1);
                 String message = format("%s rammt %s ein Stimpak in den Arm. Puh! Das war knapp (%s Karma)",
                         author.getName(), userName, STIM_PACK_KARMA);
 
                 commandService.executeCommandWithTarget(event, author, userName, STIM_PACK_KARMA, message);
-            } else if (isExpectedCommand(eventMessage, JET)) {
-                String userName = eventMessage.substring(JET.length() + 1);
+            } else if (isExpectedCommand(eventMessage, JET.value())) {
+                String userName = eventMessage.substring(JET.value().length() + 1);
                 String message = format("%s verführt %s dazu, einen tiefen Zug vom Jet zu nehmen (%s Karma)",
                         author.getName(), userName, JET_KARMA);
 
                 commandService.executeCommandWithTarget(event, author, userName, JET_KARMA, message);
-            } else if (isExpectedCommand(eventMessage, FEV)) {
-                String userName = eventMessage.substring(FEV.length() + 1);
+            } else if (isExpectedCommand(eventMessage, FEV.value())) {
+                String userName = eventMessage.substring(FEV.value().length() + 1);
                 String message = format("%s injiziert %s mit einem hochaggressiven FEV-Stamm. %s mutiert und wird zum Supermutanten! (%s Karma)",
                         author.getName(), userName, userName, FEV_KARMA);
 
                 commandService.executeCommandWithTarget(event, author, userName, FEV_KARMA, message);
-            } else if (isExpectedCommand(eventMessage, SERUM)) {
-                String userName = eventMessage.substring(SERUM.length() + 1);
+            } else if (isExpectedCommand(eventMessage, SERUM.value())) {
+                String userName = eventMessage.substring(SERUM.value().length() + 1);
                 String message = format("%s verabreicht %s ein heilendes Serum. Es wirkt und %s wird wieder zum Menschen! (%s Karma)",
                         author.getName(), userName, userName, SERUM_KARMA);
 
                 commandService.executeCommandWithTarget(event, author, userName, SERUM_KARMA, message);
-            } else if (isExpectedCommand(eventMessage, MENTATS)) {
-                String userName = eventMessage.substring(MENTATS.length() + 1);
+            } else if (isExpectedCommand(eventMessage, MENTATS.value())) {
+                String userName = eventMessage.substring(MENTATS.value().length() + 1);
                 String message = format("%s mischt %s heimlich Mentats ins Wasser. %s verspürt das unbändige Bedürfnis SUDOKU Rätsel zu lösen. (%s Karma)",
                         author.getName(), userName, userName, MENTATS_KARMA);
 
                 commandService.executeCommandWithTarget(event, author, userName, MENTATS_KARMA, message);
-            } else if (isExpectedCommand(eventMessage, BUFFOUT)) {
-                String userName = eventMessage.substring(BUFFOUT.length() + 1);
+            } else if (isExpectedCommand(eventMessage, BUFFOUT.value())) {
+                String userName = eventMessage.substring(BUFFOUT.value().length() + 1);
                 String message = format("%s versteckt Buffout zwischen %ss Vitaminpillen. %s möchte plötzlich schwere Dinge tragen. (%s Karma)",
                         author.getName(), userName, userName, BUFFOUT_KARMA);
 
                 commandService.executeCommandWithTarget(event, author, userName, BUFFOUT_KARMA, message);
-            } else if (isExpectedCommand(eventMessage, RADAWAY)) {
-                String userName = eventMessage.substring(RADAWAY.length() + 1);
+            } else if (isExpectedCommand(eventMessage, RADAWAY.value())) {
+                String userName = eventMessage.substring(RADAWAY.value().length() + 1);
                 String message = format("%s verabreicht %s eine Dosis Radaway. Eine wohlige Wärme breitet sich in %s aus. (%s Karma)",
                         author.getName(), userName, userName, RADAWAY_KARMA);
 
                 commandService.executeCommandWithTarget(event, author, userName, RADAWAY_KARMA, message);
-            } else if (isExpectedCommand(eventMessage, SUGARBOMBS)) {
-                String userName = eventMessage.substring(SUGARBOMBS.length() + 1);
+            } else if (isExpectedCommand(eventMessage, SUGARBOMBS.value())) {
+                String userName = eventMessage.substring(SUGARBOMBS.value().length() + 1);
                 String message = format("%s überhäuft %s mit knusprig-süßen Zuckerbomben! Yummy! (%s Karma)",
                         author.getName(), userName, SUGARBOMBS_KARMA);
 
                 commandService.executeCommandWithTarget(event, author, userName, SUGARBOMBS_KARMA, message);
-            } else if (isExpectedCommand(eventMessage, NUKA)) {
-                String userName = eventMessage.substring(NUKA.length() + 1);
+            } else if (isExpectedCommand(eventMessage, NUKA.value())) {
+                String userName = eventMessage.substring(NUKA.value().length() + 1);
                 String message = format("%s reicht %s eine eisgekühlte Nuka-Cola. Wohl bekomms! (%s Karma)",
                         author.getName(), userName, NUKA_KARMA);
 

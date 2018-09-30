@@ -30,14 +30,14 @@ public class Synth extends ListenerAdapter {
         String eventMessage = event.getMessage().getContentRaw();
 
         if (isCommand(eventMessage)) {
-            if (isExpectedCommand(eventMessage, INSTITUT)) {
-                String userName = eventMessage.substring(INSTITUT.length() + 1);
+            if (isExpectedCommand(eventMessage, INSTITUT.value())) {
+                String userName = eventMessage.substring(INSTITUT.value().length() + 1);
                 String message = format("Dank eines Tipps von %s konnte das Institut %s finden und gegen einen Synth austauschen (%s Karma)",
                         author.getName(), userName, INSTITUT_KARMA);
 
                 commandService.executeCommandWithTarget(event, author, userName, INSTITUT_KARMA, message);
-            } else if (isExpectedCommand(eventMessage, RECALL)) {
-                String userName = eventMessage.substring(RECALL.length() + 1);
+            } else if (isExpectedCommand(eventMessage, RECALL.value())) {
+                String userName = eventMessage.substring(RECALL.value().length() + 1);
                 String message = format("%s liest einen Recall-Code vor. Plötzlich erinnert sich %s an die Flucht vorm Institut. %s ist ein geflüchteter Synth! (%s Karma)",
                         author.getName(), userName, userName, RECALL_KARMA);
 

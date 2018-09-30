@@ -39,9 +39,9 @@ public class Team extends ListenerAdapter {
         String eventMessage = event.getMessage().getContentRaw();
 
         if (isCommand(eventMessage) && !author.isBot()) {
-            if (isExpectedCommand(eventMessage, JOIN_TEAM)) {
+            if (isExpectedCommand(eventMessage, JOIN_TEAM.value())) {
                 K400User user = userRepository.getOrInit(author);
-                String teamName = eventMessage.substring(JOIN_TEAM.length() + 1);
+                String teamName = eventMessage.substring(JOIN_TEAM.value().length() + 1);
                 if (POSSIBLE_TEAMS.contains(teamName)) {
                     user.joinTeam(teamName);
                     userRepository.save(user);

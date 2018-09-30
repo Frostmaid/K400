@@ -13,7 +13,7 @@ public class PingPongMessage extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw();
         if (isCommand(message)) {
-            if (isExpectedCommand(message, PING)) {
+            if (isExpectedCommand(message, PING.value())) {
                 event.getChannel().sendMessage("Pong").queue();
             }
         }

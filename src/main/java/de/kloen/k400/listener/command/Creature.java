@@ -28,7 +28,7 @@ public class Creature extends ListenerAdapter {
         String eventMessage = event.getMessage().getContentRaw();
 
         if (isCommand(eventMessage)) {
-            if (isExpectedCommand(eventMessage, RAT)) {
+            if (isExpectedCommand(eventMessage, RAT.value())) {
                 String message = format("Plötzlich springt eine Maulwurfsratte in den Channel! " +
                                 "Zum Glück hat %s einen Baseballschläger parat und erledigt das Viech! (%s Karma)",
                         author.getName(), RAT_KARMA);

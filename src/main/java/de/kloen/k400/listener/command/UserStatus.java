@@ -42,11 +42,11 @@ public class UserStatus extends ListenerAdapter {
         if (isCommand(message)) {
             String correctedCommand = getCorrectedCommand(message);
 
-            if (correctedCommand.length() == STATUS.length() && correctedCommand.equals(STATUS)) {
+            if (correctedCommand.length() == STATUS.value().length() && correctedCommand.equals(STATUS)) {
                 ownStatus(event);
-            } else if (correctedCommand.length() > STATUS.length() && correctedCommand.substring(0, STATUS.length()).equals(STATUS)) {
+            } else if (correctedCommand.length() > STATUS.value().length() && correctedCommand.substring(0, STATUS.value().length()).equals(STATUS)) {
                 otherUsersStatus(event);
-            } else if (isExpectedCommand(event.getMessage().getContentRaw(), KARMA_TITLE)) {
+            } else if (isExpectedCommand(event.getMessage().getContentRaw(), KARMA_TITLE.value())) {
                 String titlesMessage = titles
                         .entrySet()
                         .stream()
@@ -67,7 +67,7 @@ public class UserStatus extends ListenerAdapter {
 
     private void otherUsersStatus(MessageReceivedEvent event) {
         JDA jda = event.getJDA();
-        String userName = event.getMessage().getContentRaw().substring(STATUS.length() + 1);
+        String userName = event.getMessage().getContentRaw().substring(STATUS.value().length() + 1);
 
         Optional<K400User> user = userService.findUserForName(jda, userName);
         if (user.isPresent()) {
