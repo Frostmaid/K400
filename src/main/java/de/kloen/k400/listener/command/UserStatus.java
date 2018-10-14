@@ -42,9 +42,9 @@ public class UserStatus extends ListenerAdapter {
         if (isCommand(message)) {
             String correctedCommand = getCorrectedCommand(message);
 
-            if (correctedCommand.length() == STATUS.value().length() && correctedCommand.equals(STATUS)) {
+            if (correctedCommand.length() == STATUS.value().length() && correctedCommand.equals(STATUS.value())) {
                 ownStatus(event);
-            } else if (correctedCommand.length() > STATUS.value().length() && correctedCommand.substring(0, STATUS.value().length()).equals(STATUS)) {
+            } else if (correctedCommand.length() > STATUS.value().length() && correctedCommand.substring(0, STATUS.value().length()).equals(STATUS.value())) {
                 otherUsersStatus(event);
             } else if (isExpectedCommand(event.getMessage().getContentRaw(), KARMA_TITLE.value())) {
                 String titlesMessage = titles

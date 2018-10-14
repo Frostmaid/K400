@@ -13,6 +13,7 @@
         <commons-cli.version>1.4</commons-cli.version>
         <JDA.version>3.5.1_339</JDA.version>
         <junit-dataprovider.version>1.13.1</junit-dataprovider.version>
+        <start-class>de.kloen.k400.K400</start-class>
     </properties>
 
     <parent>
@@ -72,6 +73,16 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.0.5.RELEASE</version>
+            </plugin>
+        </plugins>
+    </build>
+
     <repositories>
         <repository>
             <id>jcenter</id>
@@ -79,4 +90,15 @@
             <url>http://jcenter.bintray.com</url>
         </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <url>https://repo.spring.io/snapshot</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <url>https://repo.spring.io/milestone</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

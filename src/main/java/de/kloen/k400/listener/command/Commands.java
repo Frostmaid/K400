@@ -11,7 +11,7 @@ public abstract class Commands {
 
     public static final Command HELP = new Command("?hilfe", "Gibt die Hilfe aus");
 
-    public static final Command KARMA_TITLE = new Command("!karmatitel", "!karamaTitel: Gibt alle Karamaränge aus.");
+    public static final Command KARMA_TITLE = new Command("!karmatitel",  "!karmaTitel: Gibt alle Karmaränge aus.");
 
     public static final Command STATUS = new Command("!status", "!status: Gibt den aktuellen Karmastatus des Users aus\n" +
             "!status <Username>: Gibt den aktuellen Karmastatus von <Username> aus");
